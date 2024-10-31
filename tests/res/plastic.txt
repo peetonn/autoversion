@@ -1,0 +1,25 @@
+0 9/5/2022 4:54:09 PM Root dir
+1 9/5/2022 5:05:28 PM first 
+2 9/5/2022 5:57:31 PM feat: add get plugin version function
+5 9/5/2022 6:08:45 PM feat: get random number method
+7 9/5/2022 6:13:42 PM fix: version numbers as integers
+8 9/6/2022 3:43:00 PM feat: allow provided config object to extend other configs
+
+BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+9 9/6/2022 3:43:38 PM feat!: send an email to the customer when a product is shipped
+10 9/6/2022 3:43:56 PM feat(api)!: send an email to the customer when a product is shipped
+11 9/6/2022 3:44:28 PM chore!: drop support for Node 6
+
+BREAKING CHANGE: use JavaScript features not available in Node 6.
+12 9/6/2022 3:44:42 PM docs: correct spelling of CHANGELOG
+13 9/6/2022 3:44:54 PM feat(lang): add Polish language
+14 9/6/2022 3:45:11 PM fix: prevent racing of requests
+
+Introduce a request id and a reference to latest request. Dismiss
+incoming responses other than from latest request.
+
+Remove timeouts which were used to mitigate the racing issue but are
+obsolete now.
+
+Reviewed-by: Z
+Refs: #123
