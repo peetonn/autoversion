@@ -116,13 +116,13 @@ All notable changes to this project will be documented in this file. See [conven
 
     @classmethod
     def parseSemVerFromHeading(cls, heading):
-        SemVerRegex = re.compile(r'(?P<version>(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)')
+        SemVerRegex = re.compile(r'.*(?P<version>(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?).*')
         headingLine = ''
         if isinstance(heading.children[0], mistletoe.span_token.RawText):
             headingLine = heading.children[0].content
         if isinstance(heading.children[0], mistletoe.span_token.Link):
             headingLine = heading.children[0].children[0].content
-        match = SemVerRegex.match(headingLine)
+        match = SemVerRegex.match(headingLine.strip())
         if match:
             return semver.VersionInfo.parse(match.group('version'))
         return None
@@ -154,6 +154,7 @@ class Chlog(Base):
             changelog = chlogGenerator.generateChangelog(self.commitHistory)
             if self.options['--noupdate']:
                 print(changelog)
+                pass
             else:
                 with open(changeLogPath, 'w') as f:
                     f.write(changelog)

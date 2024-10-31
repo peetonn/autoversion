@@ -63,3 +63,8 @@ cm find changeset "where branch='/main'" --format="{changesetid} {date} {comment
 # Git
 git log --reverse --date="format:%m/%d/%Y %I:%M:%S %p" --pretty="format:%h %ad %s" | autoversion chlog -
 ```
+* update changelog since last release (when CHANGELOG.md was modified):
+```
+# Git
+git log --reverse --date="format:%m/%d/%Y %I:%M:%S %p" --pretty="format:%h %ad %s" --after="$(git log -1 --format="%ad" --date="format:%Y-%m-%d %H:%M:%S" -- CHANGELOG.md)" | autoversion chlog -
+```
