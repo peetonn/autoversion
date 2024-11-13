@@ -43,7 +43,19 @@ class CommitType(Enum):
         return None
 
 class Commit:
-    CommitRegex = re.compile(r"(?P<initial_commit>^Initial commit\.?)|(?P<merge>^Merge [^\r\n]+)|(?P<type>^build|chore|ci|docs|feat|fix|perf|refactor|release|revert|style|test|¯\\_\(ツ\)_\/¯)(?:\((?P<scope>[\w-]+)\))?(?P<breaking>!)?: (?P<summary>[\w ,'.`:-]+)(\n)*(?P<body>[\w\s ,'.`\[\]-]+)(?P<footer>(?<=\n)(?:(?P<footer_token>[\w\s-]+): (?P<footer_value>[\w -`]+))+|$)", re.MULTILINE)
+    # CommitRegex = re.compile(r"(?P<initial_commit>^Initial commit\.?)|(?P<merge>^Merge [^\r\n]+)|(?P<type>^build|chore|ci|docs|feat|fix|perf|refactor|release|revert|style|test|¯\\_\(ツ\)_\/¯)(?:\((?P<scope>[\w-]+)\))?(?P<breaking>!)?: (?P<summary>[\w ,'.`:-]+)(\n)*(?P<body>[\w\s ,'.`\[\]-]+)(?P<footer>(?<=\n)(?:(?P<footer_token>[\w\s-]+): (?P<footer_value>[\w -`]+))+|$)", re.MULTILINE)
+    CommitRegex = re.compile(
+        r"(?P<initial_commit>^Initial commit\.?)|"
+        r"(?P<merge>^Merge [^\r\n]+)|"
+        r"(?P<type>^build|chore|ci|docs|feat|fix|perf|refactor|release|revert|style|test|¯\\_\(ツ\)_\/¯)"
+        r"(?:\((?P<scope>[\w-]+)\))?"
+        r"(?P<breaking>!)?: "
+        r"(?P<summary>[\w ,'.`:\"#-]+)"
+        r"(\n)*"
+        r"(?P<body>[\w\s ,'.`\[\]\"#-]+)"
+        r"(?P<footer>(?<=\n)(?:(?P<footer_token>[\w\s-]+): (?P<footer_value>[\w `\"#-]+))+|$)",
+        re.MULTILINE
+    )
     HistoryLineRegex = re.compile(r'^(?P<hash>[a-fA-F0-9]+) (?P<date>\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}:\d{2} (A|P)M) (?P<description>(?:.|\n)+)$', re.MULTILINE)
 
     def __init__(self, commitHash, commitType, commitScope, commitSummary, commitBody, commitFooter, isInitial = False,
